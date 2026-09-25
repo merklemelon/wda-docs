@@ -12,7 +12,7 @@ Persistence landed as migration **0009** (0008 went to factor snapshots). Deviat
 **Related:** [forward-analysis.md](forward-analysis.md) (the `analyze` tier feeding a
 thesis), `wda/scoring/` (screen + the rule-predicate pattern this reuses),
 `wda/enrich/` (narrative checks), `wda/market/` (valuation checks), the reserved
-`wda/thesis/` domain, [macro-layer-plan](../.claude/… macro) (macro checks).
+`wda/thesis/` domain, [decisions.md](decisions.md) (the macro sources ADR, 2026-09-25).
 
 ---
 
