@@ -30,19 +30,21 @@ where they change alongside the code they describe. Edit them there, not here.
 
 ## Why the build command looks like that
 
-Vercel's build image ships a **uv-managed** Python, which refuses `pip install` into the
-system environment under [PEP 668](https://peps.python.org/pep-0668/):
+Vercel's build image ships a **uv-managed** Python. Two attempts failed before the
+working one, and both failures are worth recording:
 
-```
-error: externally-managed-environment
-╰─> This Python installation is managed by uv and should not be modified.
-```
+1. `pip install` is refused outright under [PEP 668](https://peps.python.org/pep-0668/) —
+   *"This Python installation is managed by uv and should not be modified."*
+2. `uv pip install --system` **reported success** and then `python3 -m mkdocs` could not
+   import it. The package went somewhere the interpreter was not looking, and because the
+   install exited zero, the fallback never ran.
 
-So the build asks `uv` first and falls back to `pip --break-system-packages` only if uv
-is absent — rather than hard-coding either and depending on an image detail that is not
-ours to control.
+So the build stopped trying to modify the environment and asked `uv` for a disposable one
+instead. `uv run --with ... --no-project` resolves mkdocs into an ephemeral environment,
+runs the build there, and touches nothing on the image. Nothing to install, nothing to
+collide with, no dependence on where a system install lands.
 
 It ends with `ls -la _site/index.html` on purpose. A build that produces an empty
-directory and reports success publishes a site that 404s on every path, which is exactly
-what happened here before the repository was connected correctly. Failing loudly is
-better than deploying nothing quietly.
+directory and reports success publishes a site that 404s on every path — which is exactly
+what happened here while the project was connected to the wrong repository. Failing
+loudly beats deploying nothing quietly.

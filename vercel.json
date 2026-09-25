@@ -1,6 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "buildCommand": "(uv pip install --system --quiet -r requirements-docs.txt || python3 -m pip install --quiet --break-system-packages -r requirements-docs.txt) && python3 -m mkdocs build --strict --site-dir _site && ls -la _site/index.html",
+  "buildCommand": "uv run --with mkdocs-material==9.6.21 --no-project python -m mkdocs build --strict --site-dir _site && ls -la _site/index.html",
   "outputDirectory": "_site",
   "framework": null,
   "installCommand": "echo 'no node dependencies'"
