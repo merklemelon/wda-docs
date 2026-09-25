@@ -1,0 +1,60 @@
+# The public docs site: the repo's design notes and the Field Guide in one searchable
+# place. They are written for different readers — the notes for whoever is changing the
+# code, the guide for whoever is using the system — and until now neither knew the other
+# existed.
+#
+# Built by Vercel on push (see vercel.json). `docs/` is the source directly, so a design
+# note updated in a feature PR reaches the site with that PR and cannot drift.
+site_name: WorldDominationApp
+site_description: Equity-research backend over SEC EDGAR — design notes and field guide
+site_url: https://wda-docs.vercel.app
+repo_url: https://github.com/merklemelon/wda-docs
+docs_dir: docs
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: teal
+      accent: teal
+      toggle: {icon: material/weather-night, name: Dark}
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: teal
+      accent: teal
+      toggle: {icon: material/weather-sunny, name: Light}
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+markdown_extensions:
+  - admonition
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.superfences
+  - pymdownx.details
+# This repo carries only what is meant to be public. The internal notes — the working
+# log, the dev plans, acceptance criteria and the superseded v0.4 vision doc — are not
+# copied here at all, rather than copied and hidden: a public repo makes every file
+# public regardless of what the site's navigation shows.
+nav:
+  - Overview: architecture.md
+  - Field guide: field-guide.html
+  - How it decides:
+      - Thesis layer: thesis.md
+      - Forward analysis: forward-analysis.md
+      - Technical analysis: technical-analysis.md
+      - Forward outcome: forward-outcome.md
+  - How it measures:
+      - Fundamentals & valuation: fundamentals-and-valuation.md
+      - TTM fundamentals: ttm-fundamentals.md
+      - GICS sectors: gics-sectors.md
+  - How it ingests:
+      - EDGAR ingestion: edgar-ingestion.md
+      - Search corpus: search-corpus.md
+  - Reference:
+      - Micro-architecture: micro-architecture.md
+      - Decisions: decisions.md
+      - Verification: verification.md
+      - Agentic flows: wda-flows.md

@@ -1,0 +1,1017 @@
+<title>WDA Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;0,700;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --ground:#F4F5F7; --surface:#FFFFFF; --raise:#FBFCFD;
+    --ink:#14202E; --muted:#586577; --faint:#8592A2;
+    --line:#E4E8EE; --line-strong:#D2D9E2;
+    --navy:#1C3D5A; --navy-2:#2E5E86; --gold:#9E6F1E; --gold-soft:#F0E4C8;
+    --good:#2E7D5B; --warn:#9C6F16; --crit:#B5443A;
+    --shadow:0 1px 2px rgba(20,32,46,.04),0 8px 24px rgba(20,32,46,.06);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --ground:#0C1219; --surface:#141D28; --raise:#18222E;
+    --ink:#E9EDF2; --muted:#98A5B5; --faint:#6C7A8B;
+    --line:#242F3C; --line-strong:#33404F;
+    --navy:#77ABD0; --navy-2:#5B93BC; --gold:#D8AC55; --gold-soft:#3A3320;
+    --good:#5FBF93; --warn:#D8B25A; --crit:#E07A6E;
+    --shadow:0 1px 2px rgba(0,0,0,.2),0 10px 30px rgba(0,0,0,.28);
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0C1219; --surface:#141D28; --raise:#18222E;
+    --ink:#E9EDF2; --muted:#98A5B5; --faint:#6C7A8B;
+    --line:#242F3C; --line-strong:#33404F;
+    --navy:#77ABD0; --navy-2:#5B93BC; --gold:#D8AC55; --gold-soft:#3A3320;
+    --good:#5FBF93; --warn:#D8B25A; --crit:#E07A6E;
+    --shadow:0 1px 2px rgba(0,0,0,.2),0 10px 30px rgba(0,0,0,.28);
+  }
+  *{box-sizing:border-box}
+  body{background:var(--ground);color:var(--ink);
+    font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:17px;line-height:1.6;
+    margin:0;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1080px;margin:0 auto;padding-inline:24px;}
+  .col{max-width:680px;}
+  h1,h2,h3{font-family:"Spectral",Georgia,serif;font-weight:600;text-wrap:balance;line-height:1.15;}
+  h2{font-size:1.9rem;margin:0 0 .2em;letter-spacing:-.01em;}
+  h3{font-size:1.2rem;margin:0 0 .3em;}
+  p{margin:0 0 1em;}
+  a{color:var(--navy-2);}
+  code,.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:.86em;}
+  .eyebrow{font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--gold);}
+  .muted{color:var(--muted);}
+  .tag{font-family:"IBM Plex Mono",monospace;font-size:.74rem;font-weight:500;
+    padding:.12em .5em;border-radius:4px;background:var(--surface);border:1px solid var(--line-strong);
+    color:var(--muted);white-space:nowrap;}
+
+  /* ---- hero ---- */
+  header.hero{border-bottom:1px solid var(--line);background:
+    radial-gradient(120% 90% at 85% -10%, color-mix(in srgb,var(--navy) 9%,transparent), transparent 60%);}
+  .hero-inner{padding-block:64px 52px;}
+  .kicker{display:flex;align-items:center;gap:12px;margin-bottom:22px;}
+  .kicker .dot{width:9px;height:9px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-soft);}
+  h1{font-size:clamp(2.5rem,6vw,4.1rem);letter-spacing:-.02em;margin:0 0 .18em;font-weight:700;}
+  .lede{font-size:1.3rem;color:var(--muted);max-width:34ch;font-family:"Spectral",serif;font-style:italic;}
+  .statrow{display:flex;flex-wrap:wrap;gap:32px;margin-top:38px;}
+  .stat .n{font-family:"Spectral",serif;font-size:2.2rem;font-weight:700;color:var(--navy);
+    font-variant-numeric:tabular-nums;line-height:1;}
+  .stat .l{font-size:.82rem;color:var(--muted);margin-top:6px;max-width:20ch;}
+
+  section{padding-block:56px;border-bottom:1px solid var(--line);}
+  .sec-head{margin-bottom:34px;}
+
+  /* ---- funnel ---- */
+  .funnel{display:flex;flex-direction:column;gap:10px;margin:8px auto 0;}
+  .layer{position:relative;margin:0 auto;width:var(--w);max-width:100%;background:var(--surface);
+    border:1px solid var(--line-strong);border-left:4px solid var(--navy);border-radius:8px;
+    padding:16px 20px;box-shadow:var(--shadow);display:grid;grid-template-columns:1fr auto;
+    gap:6px 18px;align-items:center;}
+  .layer.l4{border-left-color:var(--gold);background:
+    linear-gradient(90deg,color-mix(in srgb,var(--gold-soft) 55%,var(--surface)),var(--surface) 65%);}
+  .layer .lid{font-family:"IBM Plex Mono",monospace;font-size:.72rem;font-weight:600;color:var(--gold);letter-spacing:.08em;}
+  .layer .lname{font-family:"Spectral",serif;font-weight:600;font-size:1.05rem;}
+  .layer .ldesc{grid-column:1/-1;font-size:.9rem;color:var(--muted);}
+  .layer .lstat{font-family:"IBM Plex Mono",monospace;font-size:.8rem;color:var(--ink);
+    text-align:right;font-variant-numeric:tabular-nums;font-weight:500;}
+  .funnel-note{text-align:center;font-size:.82rem;color:var(--faint);margin-top:14px;}
+
+  /* generic cards */
+  .grid{display:grid;gap:18px;}
+  .g2{grid-template-columns:repeat(2,1fr);}
+  .g3{grid-template-columns:repeat(3,1fr);}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:22px;box-shadow:var(--shadow);}
+  .card h3{display:flex;align-items:center;gap:9px;}
+  .card .role{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--gold);
+    text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px;}
+  .card ul{margin:.4em 0 0;padding-left:1.1em;}
+  .card li{margin:.25em 0;font-size:.95rem;}
+
+  /* example query blocks */
+  .ex{background:var(--surface);border:1px solid var(--line);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);}
+  .ex .q{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:flex-start;}
+  .ex .q .who{font-family:"IBM Plex Mono",monospace;font-size:.7rem;color:var(--faint);
+    text-transform:uppercase;letter-spacing:.1em;padding-top:3px;white-space:nowrap;}
+  .ex .q p{margin:0;font-family:"Spectral",serif;font-size:1.06rem;font-style:italic;}
+  .ex .a{padding:16px 20px;background:var(--raise);}
+  .ex .a .tool{font-family:"IBM Plex Mono",monospace;font-size:.76rem;color:var(--navy-2);margin-bottom:10px;}
+  .ex .a .tool b{color:var(--gold);}
+  .rows{font-family:"IBM Plex Mono",monospace;font-size:.8rem;display:flex;flex-direction:column;gap:5px;}
+  .rows .r{display:flex;gap:12px;align-items:baseline;}
+  .rows .sc{color:var(--navy);font-weight:600;width:3.2em;flex:none;font-variant-numeric:tabular-nums;}
+  .rows .co{color:var(--ink);font-weight:600;width:8.5em;flex:none;}
+  .rows .tx{color:var(--muted);}
+
+  table.tbl{width:100%;border-collapse:collapse;font-size:.9rem;}
+  table.tbl th,table.tbl td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);}
+  table.tbl th{font-family:"IBM Plex Mono",monospace;font-size:.72rem;text-transform:uppercase;
+    letter-spacing:.08em;color:var(--faint);font-weight:600;}
+  table.tbl td.mono{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;}
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface);box-shadow:var(--shadow);}
+
+  .chip{display:inline-flex;align-items:center;gap:5px;font-family:"IBM Plex Mono",monospace;
+    font-size:.72rem;font-weight:500;padding:.15em .5em;border-radius:4px;}
+  .chip.new{background:var(--gold-soft);color:var(--gold);border:1px solid color-mix(in srgb,var(--gold) 30%,transparent);}
+  .chip.hi{color:var(--crit);border:1px solid color-mix(in srgb,var(--crit) 35%,transparent);}
+  .chip.md{color:var(--warn);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);}
+
+  .callout{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--gold);
+    border-radius:10px;padding:24px 26px;box-shadow:var(--shadow);}
+  .pit{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:"IBM Plex Mono",monospace;
+    font-size:.8rem;margin-top:14px;}
+  .pit .box{border:1px solid var(--line-strong);border-radius:6px;padding:8px 12px;background:var(--raise);}
+  .pit .arrow{color:var(--gold);font-weight:600;}
+
+  .lead-in{font-size:1.12rem;color:var(--muted);max-width:62ch;}
+  ol.flow{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:14px;}
+  ol.flow li{counter-increment:s;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;}
+  ol.flow li::before{content:counter(s);font-family:"IBM Plex Mono",monospace;font-weight:600;
+    color:var(--navy);background:var(--surface);border:1px solid var(--line-strong);border-radius:50%;
+    width:32px;height:32px;display:grid;place-items:center;font-size:.85rem;}
+  ol.flow b{font-family:"IBM Plex Mono",monospace;font-size:.9em;color:var(--gold);}
+
+  /* ---- ranking algorithm ---- */
+  .algo{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start;}
+  .bk{font-family:"IBM Plex Mono",monospace;font-size:.68rem;font-weight:600;
+    padding:.1em .55em;border-radius:4px;white-space:nowrap;}
+  .bk.q{color:var(--navy-2);background:color-mix(in srgb,var(--navy) 12%,transparent);}
+  .bk.v{color:var(--gold);background:var(--gold-soft);}
+  td.r{text-align:right;}
+  th.r{text-align:right;}
+
+  /* ---- architecture diagram ---- */
+  .deploy{display:flex;flex-wrap:wrap;align-items:stretch;gap:6px;margin-bottom:12px;}
+  .deploy .dstep{flex:1 1 148px;background:var(--surface);border:1px solid var(--line-strong);
+    border-top:3px solid var(--gold);border-radius:8px;padding:11px 14px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:2px;}
+  .deploy .dstep b{font-family:"IBM Plex Mono",monospace;font-size:.82rem;color:var(--navy);}
+  .deploy .dstep span{font-size:.75rem;color:var(--muted);}
+  .deploy .dsep{display:flex;align-items:center;color:var(--gold);font-weight:700;font-size:1.1rem;}
+  .deploy-note{font-size:.82rem;color:var(--faint);margin:0 0 30px;}
+  .arch{display:flex;flex-direction:column;gap:0;}
+  .arch .tier{background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;
+    padding:16px 18px;box-shadow:var(--shadow);}
+  .arch .tier.accent{border-left:4px solid var(--navy);}
+  .arch .tier.out{border-left:4px solid var(--gold);background:
+    linear-gradient(90deg,color-mix(in srgb,var(--gold-soft) 48%,var(--surface)),var(--surface) 62%);}
+  .arch .tlabel{font-family:"IBM Plex Mono",monospace;font-size:.71rem;font-weight:600;
+    letter-spacing:.06em;color:var(--faint);text-transform:uppercase;margin-bottom:12px;}
+  .arch .nodes{display:flex;gap:10px;flex-wrap:wrap;}
+  .arch .node{flex:1 1 150px;background:var(--raise);border:1px solid var(--line);border-radius:8px;padding:11px 13px;}
+  .arch .nodes.tight .node{flex:1 1 118px;}
+  .arch .node.planned{border-style:dashed;background:transparent;}
+  .arch .node .nt{font-family:"IBM Plex Mono",monospace;font-size:.82rem;font-weight:600;color:var(--ink);}
+  .arch .node .nd{font-size:.78rem;color:var(--muted);margin-top:3px;}
+  .arch .down{text-align:center;padding:7px 0;font-family:"IBM Plex Mono",monospace;
+    font-size:.71rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);}
+  .arch .down::after{content:"  ▾";}
+  .on{color:var(--good);font-weight:600;} .pl{color:var(--warn);font-weight:600;}
+
+  footer{padding-block:40px 60px;color:var(--faint);font-size:.85rem;}
+  @media(max-width:720px){
+    body{font-size:16px;}
+    .g2,.g3{grid-template-columns:1fr;}
+    .layer{width:100%!important;grid-template-columns:1fr;}
+    .layer .lstat{text-align:left;}
+    .statrow{gap:22px;}
+    .algo{grid-template-columns:1fr;}
+    .deploy .dsep{display:none;}
+  }
+  @media(prefers-reduced-motion:no-preference){
+    .layer{transition:transform .2s ease;}
+    .layer:hover{transform:translateY(-1px);}
+  }
+</style>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <div class="kicker"><span class="dot"></span><span class="eyebrow">WorldDomination&nbsp;·&nbsp;Equity Research Instrument</span></div>
+    <h1>The Filing Funnel</h1>
+    <p class="lede">From the raw SEC filing to distilled, point-in-time investment signal — and a way to ask it questions in plain English.</p>
+    <div class="statrow">
+      <div class="stat"><div class="n">5,322</div><div class="l">companies in the universe</div></div>
+      <div class="stat"><div class="n">5.35M</div><div class="l">normalized XBRL facts</div></div>
+      <div class="stat"><div class="n">3,712</div><div class="l">ranked by the value screen (all priced)</div></div>
+      <div class="stat"><div class="n">3,222</div><div class="l">narrative-searchable (318k passages)</div></div>
+      <div class="stat"><div class="n">35</div><div class="l">deeply enriched (LLM extraction)</div></div>
+      <div class="stat"><div class="n">40</div><div class="l">research tools over MCP</div></div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">The idea</div>
+      <h2>A funnel, not a database</h2>
+      <p class="lead-in">Screening the whole market is cheap; reading every 10-K closely is expensive. WDA is built as a funnel: broad, quantitative coverage over the entire public universe narrows to a candidate set, then progressively more expensive processing is applied to progressively fewer names. Every layer below the raw filing is <em>rebuildable</em> from the raw filing with one command — nothing is a black box.</p>
+    </div>
+
+    <div class="funnel">
+      <div class="layer" style="--w:100%">
+        <div><span class="lid">L0 · RAW</span> <span class="lname">Filings, stored verbatim</span></div>
+        <div class="lstat">1.07M indexed · 3,989 pulled</div>
+        <div class="ldesc">SEC EDGAR submission indexes for every company, narrowed to the forms WDA can actually read (10-K / 10-Q / 8-K and their amendments) — then the documents themselves pulled with SEC-compliant rate limits and archived byte-for-byte in object storage. The immutable source of truth.</div>
+      </div>
+      <div class="layer" style="--w:88%">
+        <div><span class="lid">L1 · NORMALIZED</span> <span class="lname">XBRL facts, point-in-time</span></div>
+        <div class="lstat">~5.8M facts</div>
+        <div class="ldesc">Every reported number carries both its <span class="mono">period_end</span> and the date it was <span class="mono">filed_at</span>. Restatements are new rows, never overwrites — so you can always ask “what was knowable on date X.” Coverage spans the full filing universe.</div>
+      </div>
+      <div class="layer" style="--w:74%">
+        <div><span class="lid">L2 · SECTIONS</span> <span class="lname">Narrative, cleanly cut</span></div>
+        <div class="lstat">10-K · 10-Q · 8-K items</div>
+        <div class="ldesc">The Business, Risk Factors and MD&amp;A from the 10-K; the quarterly MD&amp;A and risk-factor update from each 10-Q; the reportable items and press-release exhibit from each 8-K. Cut by walking the filing's own markup rather than pattern-matching the flattened prose, so a contents row and a genuine heading are told apart by structure, not by length.</div>
+      </div>
+      <div class="layer" style="--w:60%">
+        <div><span class="lid">L3 · DERIVED</span> <span class="lname">Financials + valuation</span></div>
+        <div class="lstat">metrics · ratios · multiples</div>
+        <div class="ldesc">Revenue, margins, R&amp;D intensity, FCF, current ratio, debt/equity — quarters and restatements resolved server-side. Daily prices (× shares) add valuation: market cap, P/E, P/S, EV/EBIT, FCF yield.</div>
+      </div>
+      <div class="layer l4" style="--w:52%">
+        <div><span class="lid">L4a · RETRIEVAL</span> <span class="lname">The searchable corpus</span></div>
+        <div class="lstat">3,222 companies · 317,550 passages</div>
+        <div class="ldesc">Narrative cut into passages and embedded, so a question in plain English finds the companies that wrote the answer down. Indexing a filing costs about a fifteenth of a cent, roughly 265&times; less than reading one with a frontier model &mdash; which is why retrieval reaches names that reasoning never will. Widened from the liquid cohort to the whole rankable universe on 2026-09-23.</div>
+      </div>
+      <div class="layer l4" style="--w:46%">
+        <div><span class="lid">L4b · REASONING</span> <span class="lname">Distilled signal</span></div>
+        <div class="lstat">35 companies</div>
+        <div class="ldesc">LLM-extracted risk themes, products, forward-looking statements and dated catalysts — typed rows, grounded in the filing, never invented. Every call is logged to a token-cost ledger and gated by a daily spend breaker.</div>
+      </div>
+      <div class="layer l4" style="--w:32%">
+        <div><span class="lid">L5 · SCORING</span> <span class="lname">The ranked screen</span></div>
+        <div class="lstat">3,712 snapshots</div>
+        <div class="ldesc">A quality-at-a-reasonable-price composite — margins, growth, balance sheet and valuation multiples, percentile-ranked and point-in-time. Each name rests on a stored, dated <em>factor snapshot</em> (below) so a whole-market ranking is a read, not a recomputation. The funnel's output: the names worth a closer look, in order.</div>
+      </div>
+    </div>
+    <p class="funnel-note">Width ≈ how refined each layer is, not headcount — L5 ranks every name that has a snapshot (3,712 today, all priced); retrieval (L4a) is cheap enough to spread wide, while deep extraction (L4b) stays reserved for the names that earn it.</p>
+  </div>
+</section>
+
+<section id="architecture">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">How it's built &amp; deployed</div>
+      <h2>Dev station to research thesis</h2>
+      <p class="lead-in">One codebase, deployed continuously, standing between the public data sources and the questions you ask. Data flows downward; every layer is rebuildable from the raw filing with one command.</p>
+    </div>
+
+    <div class="deploy">
+      <span class="dstep"><b>Dev station</b><span>Claude Code · Mac</span></span>
+      <span class="dsep">→</span>
+      <span class="dstep"><b>git push</b><span>feat branch → PR</span></span>
+      <span class="dsep">→</span>
+      <span class="dstep"><b>GitHub Actions</b><span>ruff · mypy · pytest</span></span>
+      <span class="dsep">→</span>
+      <span class="dstep"><b>fly deploy</b><span>--remote-only, on merge</span></span>
+      <span class="dsep">→</span>
+      <span class="dstep"><b>release</b><span>alembic upgrade head</span></span>
+    </div>
+    <p class="deploy-note">The build &amp; deploy spine: code reaches production only after the checks pass, and the release step migrates the database before the new version serves traffic.</p>
+
+    <div class="arch">
+      <div class="tier">
+        <div class="tlabel">Sources — ingested, rate-limited, SEC-compliant</div>
+        <div class="nodes">
+          <div class="node"><div class="nt">SEC EDGAR</div><div class="nd">10-K / 10-Q / 8-K + XBRL facts · <span class="on">live</span></div></div>
+          <div class="node"><div class="nt">FRED</div><div class="nd">rates, curve, CPI, unemployment · <span class="on">live</span></div></div>
+          <div class="node"><div class="nt">EIA</div><div class="nd">crude &amp; natural-gas spot · <span class="on">live</span></div></div>
+          <div class="node planned"><div class="nt">Federal Register</div><div class="nd">regulation · <span class="pl">planned</span></div></div>
+        </div>
+      </div>
+
+      <div class="down">ingest</div>
+
+      <div class="tier accent">
+        <div class="tlabel">Compute — fly.io · one image, three process groups</div>
+        <div class="nodes">
+          <div class="node"><div class="nt">web</div><div class="nd">FastAPI + the MCP endpoint — what Claude talks to</div></div>
+          <div class="node"><div class="nt">worker</div><div class="nd">job queue — fetch, enrich, embed, backfill</div></div>
+          <div class="node"><div class="nt">scheduler</div><div class="nd">APScheduler — periodic jobs + stuck-job reaper</div></div>
+        </div>
+      </div>
+
+      <div class="down">reads / writes</div>
+
+      <div class="tier">
+        <div class="tlabel">State — Supabase Postgres + pgvector (the L0→L5 pipeline)</div>
+        <div class="nodes tight">
+          <div class="node"><div class="nt">L0 raw</div><div class="nd">filings, verbatim</div></div>
+          <div class="node"><div class="nt">L1 facts</div><div class="nd">point-in-time XBRL</div></div>
+          <div class="node"><div class="nt">L2 sections</div><div class="nd">Item 1 / 1A / 7</div></div>
+          <div class="node"><div class="nt">L3 derived</div><div class="nd">financials + valuation</div></div>
+          <div class="node"><div class="nt">L4 enrichment</div><div class="nd">signal + embeddings</div></div>
+          <div class="node"><div class="nt">L5 screen</div><div class="nd">the ranked cohort</div></div>
+          <div class="node"><div class="nt">macro</div><div class="nd">agency series, point-in-time</div></div>
+        </div>
+      </div>
+
+      <div class="down">MCP · Model Context Protocol</div>
+
+      <div class="tier">
+        <div class="tlabel">Interface — served to Claude</div>
+        <div class="nodes">
+          <div class="node"><div class="nt">claude.ai</div><div class="nd">chat &amp; Projects, with the WDA connector attached</div></div>
+          <div class="node"><div class="nt">Claude Code</div><div class="nd">the developer / power-user surface</div></div>
+        </div>
+      </div>
+
+      <div class="down">grounded, point-in-time answers</div>
+
+      <div class="tier out">
+        <div class="tlabel">Output — the research product</div>
+        <div class="nodes">
+          <div class="node"><div class="nt">Universe study</div><div class="nd">the whole-market screen + comparable facts — what's quality, what's cheap, right now</div></div>
+          <div class="node"><div class="nt">Implied expectations</div><div class="nd">what the price already assumes — a reverse-DCF off the same facts &amp; prices · <span class="on">live</span></div></div>
+          <div class="node"><div class="nt">Research thesis</div><div class="nd">a falsifiable, monitored investment case — claims and tripwires re-checked nightly · <span class="on">live</span></div></div>
+        </div>
+      </div>
+    </div>
+    <p class="funnel-note"><span class="on">live</span> = running in production today &nbsp;·&nbsp; <span class="pl">planned</span> = the regulation stream (Federal Register) and the company-level macro-exposure extraction. Rates and energy went live 2026-09-24.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">What it does to a filing</div>
+      <h2>Pulled, normalized, reasoned, extracted</h2>
+      <p class="lead-in">Four verbs, four kinds of output. The first two are deterministic plumbing; the last two are where the research leverage is.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="role">Pulled &amp; normalized — deterministic</div>
+        <h3>The numbers, made comparable</h3>
+        <p class="muted" style="font-size:.95rem">XBRL is standardized in theory and idiosyncratic in practice — NVIDIA tags recent revenue as <span class="mono">Revenues</span> while older periods use a different concept; Apple does the opposite. WDA coalesces vendor tags into canonical metrics per period, so a cross-company query just works.</p>
+        <ul>
+          <li><b>Base:</b> revenue, COGS, gross profit, R&amp;D, SG&amp;A, operating &amp; net income, EPS, shares, operating cash flow, capex, balance-sheet items.</li>
+          <li><b>Ratios:</b> gross / operating / net margin, R&amp;D intensity, FCF &amp; FCF margin, current ratio, debt/equity.</li>
+          <li><b>Returns on capital:</b> ROE, ROA and ROCE (EBIT / capital employed — pre-tax, because an after-tax figure would need a tax rate reconstructed from other lines). A debt-free balance sheet still gets a ROCE: an untagged debt line means none, not unknown.</li>
+          <li><b>Valuation:</b> market cap, P/E, P/S, EV/EBIT, FCF yield — from daily closes × shares.</li>
+          <li><b>Grain:</b> quarterly or annual, most-recent-first, point-in-time correct.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Extracted &amp; reasoned — LLM</div>
+        <h3>The narrative, made structured</h3>
+        <p class="muted" style="font-size:.95rem">A frontier model reads the fiscal year’s narrative — the 10-K’s Items 1, 1A and 7, then each 10-Q’s MD&amp;A (Part I Item 2) and risk-factor update (Part II Item 1A) — and returns typed, filing-grounded rows: never invented, deduplicated, ordered by materiality. Each extraction is logged to a token-cost ledger and gated by a daily spend breaker.</p>
+        <ul>
+          <li><b>risk_themes</b> — material risks, with a severity hint and an <span class="mono">is_new</span> flag vs. the prior 10-K; each 10-Q adds a <em>quarterly update</em> (an empty one means the filer reported no material changes).</li>
+          <li><b>products</b> — the products/services described, with lifecycle stage.</li>
+          <li><b>forward_statements</b> — guidance, strategy, capex &amp; capital-allocation signals from MD&amp;A.</li>
+          <li><b>events</b> — dated or binary catalysts (maturities, launches, milestones) from MD&amp;A, plus each 8-K current report and its press release: results and guidance, deals, financings, officer changes, dividends — within hours of filing.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">The value-investor edge</div>
+      <h2>Point-in-time, by construction</h2>
+    </div>
+    <div class="col">
+      <div class="callout">
+        <h3 style="margin-bottom:.4em">No lookahead bias baked in</h3>
+        <p style="margin-bottom:.2em">Every fact stores <span class="mono">period_end</span> <em>and</em> <span class="mono">filed_at</span>, and restatements are appended as new rows rather than replacing the original. A derived read accepts an <span class="mono">as_of</span> date and returns only what was actually filed by then — the world as the market saw it, not as it was later corrected.</p>
+        <div class="pit">
+          <span class="box">period_end&nbsp;2024-12-31</span>
+          <span class="arrow">→</span>
+          <span class="box">filed_at&nbsp;2025-02-14</span>
+          <span class="arrow">→</span>
+          <span class="box" style="border-color:var(--gold)">as_of 2025-01-31 → not yet visible</span>
+        </div>
+        <p class="muted" style="font-size:.92rem;margin-top:16px;margin-bottom:0">Why it matters: back-testing a thesis or a screen on restated, forward-filled fundamentals quietly launders in information nobody had. Here, a query dated to any past day is honest about what was knowable.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Seeing it work</div>
+      <h2>Nine questions, answered from the corpus</h2>
+      <p class="lead-in">Real results from the current dataset — mega-caps plus a growing AI-semiconductor set. Ask in plain English; the model picks the tool and shapes the answer.</p>
+    </div>
+    <div class="grid g2" style="align-items:start">
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“R&amp;D as a share of revenue for Apple, Tesla and NVIDIA over the last 16 quarters.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>get_financials</b>(ciks=[…], metrics=[revenue, rnd, rnd_intensity], periods=16)</div>
+          <p class="muted" style="font-size:.9rem;margin:0">One structured call returns comparable, quarter-aligned series for all three — no scraping EDGAR, no hand-stitching XBRL. The model then tables and charts it.</p>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Which of these companies flag AI-related regulatory or legal risk?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>search_enrichment</b>(query=“AI regulation and legal risk”, target=risk_themes)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">0.66</span><span class="co">Microsoft</span><span class="tx">AI systems may cause over-reliance / user harm</span></div>
+            <div class="r"><span class="sc">0.64</span><span class="co">Alphabet</span><span class="tx">new AI compliance obligations, evolving scope</span></div>
+            <div class="r"><span class="sc">0.61</span><span class="co">Meta</span><span class="tx">AI investment &amp; legal/ethical execution risk</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Who depends on a third-party foundry like TSMC?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>search_filings</b>(query=“dependence on third-party foundry / TSMC”, item=1A)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">0.68</span><span class="co">AMD</span><span class="tx">reliant on outsourced wafer fabrication…</span></div>
+            <div class="r"><span class="sc">0.65</span><span class="co">Astera Labs</span><span class="tx">supply concentration could affect sales…</span></div>
+            <div class="r"><span class="sc">0.63</span><span class="co">Credo</span><span class="tx">inability to secure process technology…</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“What high-bandwidth-memory products do these names ship?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>search_enrichment</b>(query=“HBM &amp; AI accelerator silicon”, target=products)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">0.77</span><span class="co">Micron</span><span class="tx">HBM3E 12-high, HBM4 36GB — 3D-stacked DRAM</span></div>
+            <div class="r"><span class="sc">0.76</span><span class="co">Rambus</span><span class="tx">HBM4 memory-interface controller IP</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“What risks did Tesla add this year that weren’t in last year’s 10-K?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>get_risk_themes</b>(cik=Tesla) — filter <span class="mono">is_new = true</span></div>
+          <div class="rows">
+            <div class="r"><span class="chip new">NEW ’26</span><span class="tx">Optimus / humanoid-robot program execution &amp; demand</span></div>
+            <div class="r"><span class="chip new">NEW ’26</span><span class="tx">CEO Performance Award — dilution &amp; retention overhang</span></div>
+          </div>
+          <p class="muted" style="font-size:.86rem;margin:12px 0 0">The extractor diffs Item 1A against the prior year, so the <em>change</em> in management’s stated concerns is a first-class signal.</p>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Where are these companies guiding capex for AI infrastructure?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>search_enrichment</b>(query=“data-center capex &amp; AI infrastructure”, target=forward_statements)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">0.69</span><span class="co">Tesla</span><span class="tx">capex expected to exceed $20B in 2026</span></div>
+            <div class="r"><span class="sc">0.67</span><span class="co">Microsoft</span><span class="tx">continued capex to support cloud &amp; AI growth</span></div>
+            <div class="r"><span class="sc">0.65</span><span class="co">Alphabet</span><span class="tx">expanding compute capacity for AI training/inference</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Rank these names on a quality-at-a-reasonable-price basis.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>screen</b>(point-in-time composite over margins, growth, balance sheet &amp; valuation)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">#1</span><span class="co">Meta</span><span class="tx">cheap P/E, top-decile FCF yield &amp; margins</span></div>
+            <div class="r"><span class="sc">#3</span><span class="co">Microsoft</span><span class="tx">quality + a reasonable multiple</span></div>
+            <div class="r"><span class="sc">#5</span><span class="co">Qualcomm</span><span class="tx">the value name — highest FCF yield, low EV/EBIT</span></div>
+            <div class="r"><span class="sc">#24</span><span class="co">Intel</span><span class="tx">weak across margins &amp; growth</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Which of these is cheapest on cash flow right now?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>get_valuation</b>(ciks=[…]) — trailing multiples off the latest close</div>
+          <div class="rows">
+            <div class="r"><span class="sc">6.4%</span><span class="co">Qualcomm</span><span class="tx">FCF yield · P/E 36 · P/S 4.5</span></div>
+            <div class="r"><span class="sc">1.8%</span><span class="co">NVIDIA</span><span class="tx">FCF yield · P/E 44 — AI premium</span></div>
+            <div class="r"><span class="sc">0.2%</span><span class="co">Micron</span><span class="tx">FCF yield · P/E 128 — earnings trough</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ex" style="border-left:4px solid var(--gold)">
+        <div class="q"><span class="who">Ask</span><p>“What growth is Tesla’s price already assuming?”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>implied_expectations</b>(cik=Tesla) — the reverse-DCF, band first</div>
+          <div class="rows">
+            <div class="r"><span class="sc" style="width:auto">+40…46%/yr</span><span class="tx">FCF growth for a decade, across WACC 8–12% × terminal 2–3%</span></div>
+            <div class="r"><span class="sc" style="width:auto">≈ +5%/yr</span><span class="tx">the same question for Qualcomm — the value name, priced for little</span></div>
+          </div>
+          <p class="muted" style="font-size:.86rem;margin:12px 0 0">A 300× P/E stops being a mystery when it’s restated as the growth path it requires. Details in <a href="#forward">Forward analysis</a>.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="algorithm">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Inside the screen</div>
+      <h2>How the ranking is actually computed</h2>
+      <p class="lead-in">The screen is a <em>quality-at-a-reasonable-price</em> composite — seven fundamental factors, five valuation multiples, a price-momentum factor and a liquidity read (both off by default), each turned into a percentile rank within the cohort, then blended by weight. No black box: a transparent, rebuildable recipe you can re-weight per query.</p>
+    </div>
+
+    <div class="algo">
+      <div>
+        <div class="tblwrap">
+          <table class="tbl">
+            <thead><tr><th>Factor</th><th>Bucket</th><th>Better</th><th class="r">Weight</th></tr></thead>
+            <tbody>
+              <tr><td>FCF yield</td><td><span class="bk v">valuation</span></td><td class="mono">high</td><td class="mono r">1.5</td></tr>
+              <tr><td>FCF margin</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">1.0</td></tr>
+              <tr><td>Operating margin</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">1.0</td></tr>
+              <tr><td>Revenue growth (YoY)</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">1.0</td></tr>
+              <tr><td>P/E</td><td><span class="bk v">valuation</span></td><td class="mono">low</td><td class="mono r">1.0</td></tr>
+              <tr><td>EV / EBIT</td><td><span class="bk v">valuation</span></td><td class="mono">low</td><td class="mono r">1.0</td></tr>
+              <tr><td>Net margin</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">0.5</td></tr>
+              <tr><td>Gross margin</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">0.5</td></tr>
+              <tr><td>Current ratio</td><td><span class="bk q">quality</span></td><td class="mono">high</td><td class="mono r">0.5</td></tr>
+              <tr><td>Debt / equity</td><td><span class="bk q">quality</span></td><td class="mono">low</td><td class="mono r">0.5</td></tr>
+              <tr><td>P/S</td><td><span class="bk v">valuation</span></td><td class="mono">low</td><td class="mono r">0.5</td></tr>
+              <tr><td>P/B</td><td><span class="bk v">valuation</span></td><td class="mono">low</td><td class="mono r">0.5</td></tr>
+              <tr><td>Momentum (12-1)</td><td><span class="bk" style="color:var(--good);background:color-mix(in srgb,var(--good) 12%,transparent)">momentum</span></td><td class="mono">high</td><td class="mono r">0 · opt-in</td></tr>
+              <tr><td>Avg dollar volume (63d)</td><td><span class="bk" style="color:var(--muted);background:color-mix(in srgb,var(--muted) 12%,transparent)">liquidity</span></td><td class="mono">high</td><td class="mono r">0 · rule field</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="muted" style="font-size:.85rem;margin-top:12px">These are the default lens — <span class="mono">list_factors</span> returns the exact set, and you can override the weights per query (e.g. crank the valuation bucket for a deep-value tilt, zero out growth, or add momentum: the trailing 12-month return on the split-adjusted close, skipping the last month — a well-replicated premium that <em>diversifies</em> value rather than contradicting it, so it ships at weight 0 and you dial it in).</p>
+      </div>
+
+      <div>
+        <ol class="flow">
+          <li><div><b>Measure.</b> Every company carries a stored <em>snapshot</em> of its twelve factors: the quality ratios from its latest complete fiscal year are refreshed the moment a new filing lands, and the multiples (latest close × diluted shares) are revalued every trading night after prices sync. A screen reads those rows — thousands of names in milliseconds — while a dated <span class="mono">as_of</span> question still recomputes from the facts as they stood, for a small named set.</div></li>
+          <li><div><b>Rank each factor.</b> Convert every factor to a <em>percentile within the cohort</em> (0–1), direction-adjusted so higher always means better — the "low is better" factors (P/E, EV/EBIT, debt/equity…) get inverted. Percentile ranks, not z-scores, so one outlier (Micron's 128× P/E) can't distort the scale.</div></li>
+          <li><div><b>Blend.</b> The composite is the weighted average of the factor percentiles a company <em>actually has</em> — weights renormalized over just those, so a missing factor neither helps nor hurts. Coverage (how many of the twelve had data) is returned alongside, so you can discount a thin score.</div></li>
+          <li><div><b>Rank &amp; return.</b> Sort by composite, best first. <span class="mono">get_score</span> then opens one name's per-factor breakdown and its rank within the cohort.</div></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:28px;border-left-color:var(--navy)">
+      <h3 style="margin-bottom:.4em">What is a score relative to? The cohort you choose.</h3>
+      <p style="margin-bottom:0">Because each score is a percentile <em>within the cohort</em>, the cohort defines what it means — "top-decile FCF yield" means top-decile <em>of whatever set was scored</em>. Rank against the whole market and it's market-relative; rank against a handful of peers and it's peer-relative. A single company isn't a screen (a percentile needs peers) — for one name use <span class="mono">get_score</span>, which reports its rank within the cohort.</p>
+      <p class="muted" style="font-size:.92rem;margin:12px 0 0">So the field you rank over is a real choice — the whole universe, a saved watchlist, or everything matching a live rule. That's what <b>cohorts</b> are, next.</p>
+    </div>
+  </div>
+</section>
+
+<section id="snapshots">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Between the layers</div>
+      <h2>The snapshot: L5 made durable</h2>
+      <p class="lead-in">Ranking the market means fourteen factors for every company. Computing them from five million facts on every question was the slowest thing WDA did. So each company now keeps a stored <em>factor snapshot</em> — the finished measurements, dated — and every ranking, rule and thesis check reads that instead of recomputing.</p>
+    </div>
+
+    <div class="arch">
+      <div class="tier">
+        <div class="tlabel">Inputs — the lower layers a snapshot is built from</div>
+        <div class="nodes tight">
+          <div class="node"><div class="nt">L1 facts</div><div class="nd">the latest complete fiscal year, point-in-time</div></div>
+          <div class="node"><div class="nt">L3 derived</div><div class="nd">margins, growth, FCF, balance-sheet ratios</div></div>
+          <div class="node"><div class="nt">Daily prices</div><div class="nd">close, adjusted close, volume — five years deep</div></div>
+        </div>
+      </div>
+
+      <div class="down">built when a filing lands · revalued every trading night</div>
+
+      <div class="tier accent">
+        <div class="tlabel">L5 · factor_snapshots — one row per company</div>
+        <div class="nodes">
+          <div class="node"><div class="nt">quality</div><div class="nd">seven fundamental factors, dated <span class="mono">fundamentals_at</span></div></div>
+          <div class="node"><div class="nt">valuation</div><div class="nd">five multiples from the latest close, dated <span class="mono">price_date</span> · <span class="mono">valued_at</span></div></div>
+          <div class="node"><div class="nt">momentum · liquidity</div><div class="nd">12-1 return and 63-day dollar volume, off by default</div></div>
+          <div class="node"><div class="nt">inputs</div><div class="nd">the raw numbers each factor came from, kept for audit</div></div>
+        </div>
+      </div>
+
+      <div class="down">read by</div>
+
+      <div class="tier">
+        <div class="tlabel">Consumers — everything that ranks, filters or checks</div>
+        <div class="nodes tight">
+          <div class="node"><div class="nt">screen</div><div class="nd">percentiles within the cohort</div></div>
+          <div class="node"><div class="nt">get_score</div><div class="nd">one name's factor breakdown</div></div>
+          <div class="node"><div class="nt">cohort rules</div><div class="nd"><span class="mono">adv_63 gte 5000000</span>, <span class="mono">ev_ebit lt 15</span></div></div>
+          <div class="node"><div class="nt">thesis checks</div><div class="nd"><span class="mono">factor_percentile</span> and <span class="mono">price_metric</span> conditions and tripwires</div></div>
+          <div class="node"><div class="nt">"screenable"</div><div class="nd">the built-in cohort = every name with a snapshot</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid g3" style="margin-top:28px">
+      <div class="card">
+        <div class="role">Refresh</div>
+        <h3>Two clocks, one row</h3>
+        <ul>
+          <li><b>Fundamentals</b> refresh the moment a company's new facts are ingested — the facts sync chains a snapshot rebuild for that one name.</li>
+          <li><b>Multiples</b> are re-derived for the whole universe every trading night: prices at 18:00 ET, revaluation at 19:30, theses re-checked at 20:00.</li>
+          <li>A weekly full price refresh (Saturday) re-pulls five years so splits and dividends stay adjusted.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Freshness</div>
+        <h3>Dated, never silently stale</h3>
+        <ul>
+          <li>Every screen carries a <span class="mono">basis</span> block — the newest <span class="mono">price_date</span> and <span class="mono">valued_at</span> across the snapshot table. Read it as the <em>best</em> case: each company is priced at its own latest close, so a name whose bar was missing that evening sits a day behind the header date.</li>
+          <li>Coverage says how many of the fourteen factors the name actually had — a one-factor name can top a ranking on one ratio, so the guide's advice is to prefer coverage ≥ 6 or say so.</li>
+          <li>Fundamentals are dated per company too: <span class="mono">fundamentals_at</span> is each filer’s own latest fiscal year, so a March and a December year-end are compared as filed. That is inherent to any cross-sectional screen.</li>
+          <li>Ask for a date (<span class="mono">as_of</span>) and WDA recomputes from the facts instead, for a cohort of at most 50 names — one common date, a backtest rather than a screen.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Why it matters</div>
+        <h3>The funnel's fast path</h3>
+        <ul>
+          <li>Before snapshots, a whole-market screen scanned millions of facts per question and could take minutes; now it reads 3,712 rows.</li>
+          <li>The snapshot is <em>derived</em>: it is rebuilt from L1 and prices at any time, so it can never be the only copy of a number.</li>
+          <li>New factors join by adding a column to the snapshot, not a new query path — momentum and liquidity arrived that way.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tblwrap" style="margin-top:22px">
+      <table class="tbl">
+        <thead><tr><th>Field</th><th>What it holds</th><th>Set by</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">quality</td><td>fcf_margin, operating_margin, net_margin, gross_margin, revenue_growth, current_ratio, debt_to_equity</td><td>filing-time rebuild</td></tr>
+          <tr><td class="mono">factors</td><td>fcf_yield, pe, ev_ebit, ps, pb, momentum_12_1, adv_63 — the price-dependent set</td><td>nightly revaluation</td></tr>
+          <tr><td class="mono">inputs</td><td>the underlying values — market cap, diluted shares, EBIT, book value, the closes used</td><td>both</td></tr>
+          <tr><td class="mono">price · price_date</td><td>the close the multiples were struck at, and its trading date</td><td>nightly revaluation</td></tr>
+          <tr><td class="mono">fundamentals_at</td><td>the filing date of the fiscal year the ratios describe</td><td>filing-time rebuild</td></tr>
+          <tr><td class="mono">valued_at</td><td>when the row was last written</td><td>either</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="cohorts">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Cohorts</div>
+      <h2>Choose who gets ranked</h2>
+      <p class="lead-in">A <em>cohort</em> is the set the screen ranks over. Since a score is a percentile <em>within</em> that set, choosing the cohort is choosing what the ranking means — the whole market, a peer group, a saved watchlist, or everything matching a live rule. Four ways to say it, all re-weightable and point-in-time.</p>
+    </div>
+
+    <div class="tblwrap" style="margin-bottom:34px">
+      <table class="tbl">
+        <thead><tr><th>Define it by…</th><th>How</th><th>Good for</th></tr></thead>
+        <tbody>
+          <tr><td><b>a built-in name</b></td><td class="mono">cohort="screenable" | "searchable" | "enriched"</td><td>the whole rankable universe (3,712), everything whose narrative is indexed for search (3,222), or just the deeply-extracted set (35)</td></tr>
+          <tr><td><b>an ad-hoc list</b></td><td class="mono">tickers=[…] &nbsp;or&nbsp; ciks=[…]</td><td>a quick, throwaway peer comparison</td></tr>
+          <tr><td><b>a saved cohort</b></td><td class="mono">create_cohort(name, …) → cohort=name</td><td>a watchlist you rank again and again</td></tr>
+          <tr><td><b>a rule</b></td><td class="mono">rule=&#123;clauses:[[field,op,value]…]&#125;</td><td>a live screen that re-selects members every run</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Rank the fully-enriched names against each other.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>screen</b>(cohort=“enriched”)</div>
+          <div class="rows">
+            <div class="r"><span class="sc">#1</span><span class="co">Meta</span><span class="tx">composite 0.75 — cheap multiple, top margins</span></div>
+            <div class="r"><span class="sc">#2</span><span class="co">NVIDIA</span><span class="tx">composite 0.73 — growth &amp; margins carry it</span></div>
+            <div class="r"><span class="sc">#3</span><span class="co">Microsoft</span><span class="tx">composite 0.69 — quality at a fair price</span></div>
+            <div class="r"><span class="sc">#5</span><span class="co">Qualcomm</span><span class="tx">composite 0.65 — the value name</span></div>
+          </div>
+          <p class="muted" style="font-size:.86rem;margin:12px 0 0">Percentiles are recomputed <em>within the 35</em> — this is peer-relative, not market-relative.</p>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Just rank NVDA, AMD, AVGO and MU among themselves — value-tilted.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>screen</b>(tickers=[NVDA, AMD, AVGO, MU], weights=&#123;fcf_yield:2, ev_ebit:2&#125;)</div>
+          <p class="muted" style="font-size:.9rem;margin:0">An ad-hoc cohort — nothing saved. The four are scored only against each other, and the custom weights lean the composite toward cheapness. Pass <span class="mono">tickers</span> or <span class="mono">ciks</span>; unknown tickers are reported, never silently dropped.</p>
+        </div>
+      </div>
+
+      <div class="ex">
+        <div class="q"><span class="who">Ask</span><p>“Save my semis watchlist so I can rank it anytime.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>create_cohort</b>(“my-semis”, tickers=[…]) &nbsp;·&nbsp; <b>screen</b>(cohort=“my-semis”)</div>
+          <p class="muted" style="font-size:.9rem;margin:0">Saving is a two-step <em>preview → confirm</em> (you see the resolved members first). After that, <span class="mono">screen(cohort="my-semis")</span> ranks it forever; <span class="mono">get_cohort</span> shows its coverage (how many members have facts / are enriched).</p>
+        </div>
+      </div>
+
+      <div class="ex" style="border-left:4px solid var(--gold)">
+        <div class="q"><span class="who">Ask</span><p>“Cheap, quality names: EV/EBIT under 15 and positive free-cash-flow yield.”</p></div>
+        <div class="a">
+          <div class="tool">→ <b>screen</b>(rule=&#123;match:“all”, clauses:[[“ev_ebit”,“lt”,15], [“fcf_yield”,“gt”,0]]&#125;)</div>
+          <div class="rows">
+            <div class="r"><span class="sc" style="width:auto">rule → subset</span><span class="tx">only the names passing both clauses survive, then they’re ranked <em>within the survivors</em></span></div>
+            <div class="r"><span class="sc">#1</span><span class="tx">composite 0.91 — best blend of the value + quality factors in the set</span></div>
+          </div>
+          <p class="muted" style="font-size:.86rem;margin:12px 0 0">A rule filters the universe’s factor rows, then ranks what’s left. It re-evaluates every run, so it stays current — save it with <span class="mono">create_cohort(rule=…)</span> to reuse by name.</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout" style="margin-top:30px">
+      <h3 style="margin-bottom:.4em">The rule vocabulary</h3>
+      <p style="margin-bottom:.4em">A rule is a small, safe predicate — no code, no free-text — that the model builds from your words (<span class="mono">get_rule_fields</span> lists it):</p>
+      <div class="pit" style="margin-top:6px">
+        <span class="box"><b>fields</b> — any scoring factor (fcf_yield, ev_ebit, margins, growth, momentum_12_1, adv_63…) + sector (SIC) + gics_sector (the 11 GICS sectors)</span>
+        <span class="box"><b>operators</b> — eq · ne · lt · lte · gt · gte · in · not_in</span>
+        <span class="box"><b>match</b> — all (AND) / any (OR)</span>
+      </div>
+      <p class="muted" style="font-size:.9rem;margin:14px 0 0">Fields are a fixed whitelist, so a rule can never reach arbitrary data. Example — semis with pricing power: <span class="mono">[["sector","in",["Semiconductors &amp; Related Devices"]], ["gross_margin","gt",50], ["revenue_growth","gt",10]]</span>. Or think in GICS, the way most planners do: <span class="mono">[["gics_sector","eq","Information Technology"], ["fcf_yield","gt",0]]</span>. An <em>investable</em> cohort is one clause: <span class="mono">[["adv_63","gte",5000000]]</span> — the screenable universe is not the tradeable one. <span class="mono">list_sectors</span> shows the sector values actually present, with counts — the GICS label is a best-effort crosswalk from each company’s SIC code (4-digit overrides, then the 2-digit major group), not an official index assignment.</p>
+    </div>
+  </div>
+</section>
+
+<section id="forward">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Forward analysis</div>
+      <h2>What does the price already assume?</h2>
+      <p class="lead-in">Screens rank the present. A high multiple is only understandable through the future it prices in — so WDA runs the DCF <em>backwards</em>: given today’s price, the latest free cash flow, the share count and net debt, it solves for the constant growth rate over a ten-year horizon that would justify the price. That number is the market’s implied expectation, and it is what a thesis argues with.</p>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+      <div class="card">
+        <div class="role">The reading — band first</div>
+        <h3>A range, never a point</h3>
+        <p class="muted" style="font-size:.95rem">The answer moves with the discount rate, so the tool leads with a sensitivity band — WACC 8 / 10 / 12% × terminal growth 2 / 3% — and only then the headline at your assumptions (defaults 10% · 10 years · 2.5%). Every number is tagged with where it came from: <span class="mono">market</span>, <span class="mono">fact</span>, <span class="mono">market_implied</span> or <span class="mono">user_assumption</span>.</p>
+        <div class="pit" style="margin-top:8px">
+          <span class="box">price × shares</span><span class="arrow">+</span><span class="box">net debt</span><span class="arrow">=</span><span class="box">what FCF must grow into</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="role">Three bases + a flag</div>
+        <h3>Latest · mid-cycle · peak</h3>
+        <p class="muted" style="font-size:.95rem">A cyclical at a trough looks absurdly expensive on last year’s FCF and cheap on its best year. So the growth is solved off three bases — the reported FCF, revenue × the median margin of the last five fiscal years, and revenue × the best margin — and the name is flagged <span class="mono">cyclical</span> when they disagree by more than half. The three bracket the truth instead of pretending to know it.</p>
+      </div>
+      <div class="card">
+        <div class="role">Revenue mode</div>
+        <h3>When FCF is negative</h3>
+        <p class="muted" style="font-size:.95rem">A cash-burning name has no positive base to grow. Pass a target FCF margin (or let the tool use the company’s own best historical margin — never a fabricated default) and it answers the implied <em>revenue</em> growth instead, labelled optimistic because it assumes the margin from year one.</p>
+      </div>
+      <div class="card">
+        <div class="role">Per share</div>
+        <h3>Buybacks are a translation</h3>
+        <p class="muted" style="font-size:.95rem">Buybacks redistribute cash flow; they don’t create it. The tool reports the net buyback yield (from the diluted share-count trend) and translates total-FCF growth into per-share growth — and withholds it when the share count moved like a split, not a buyback.</p>
+      </div>
+    </div>
+
+    <div class="callout" style="margin-top:28px">
+      <h3 style="margin-bottom:.4em">Grounded in the narrative, honest about limits</h3>
+      <p style="margin-bottom:.2em">The result arrives with the L4 forward statements, products and events for the name, so the implied growth can be argued against what management actually says it is building. Where the math has no answer — a bank, where FCF is ill-defined; a name with no positive base and no target margin — the tool says so with a status rather than a number.</p>
+      <p class="muted" style="font-size:.92rem;margin:12px 0 0">The assumptions are yours, and they are explicit. Change the WACC and the answer changes; that is the point, not a flaw.</p>
+    </div>
+  </div>
+</section>
+
+<section id="thesis">
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">The thesis</div>
+      <h2>An investment case the data can argue with</h2>
+      <p class="lead-in">Most theses live in a document nobody revisits. Here a thesis is a <em>structured, falsifiable object</em>: a stance and a horizon, the claims that must hold, the tripwires that must not occur — each bound to a check over the stack — and WDA re-checks all of it against new filings and prices, every night, indefinitely.</p>
+    </div>
+
+    <div class="ex" style="border-left:4px solid var(--gold);margin-bottom:26px">
+      <div class="q"><span class="who">Ask</span><p>“Open a medium-conviction, three-year long on Qualcomm: cheap on cash flow, durable margins, and the market’s under-asking. Kill it if gross margin breaks 50 for two quarters, or a new in-house-modem risk shows up at a customer.”</p></div>
+      <div class="a">
+        <div class="tool">→ <b>create_thesis</b>(…conditions=[fcf_yield &gt; 6% · gross_margin &gt; 50 for 2 quarters · no <em>new</em> modem risk · implied growth &lt; 20%/yr], confirm=false)</div>
+        <div class="rows">
+          <div class="r"><span class="sc" style="width:auto">preview</span><span class="tx">every check resolved <em>live</em> before anything is saved — you see the baseline health, then confirm</span></div>
+          <div class="r"><span class="sc" style="width:auto">intact</span><span class="tx">FCF yield 6.4% ✓ · gross margin 55% ✓ · no new modem risk ✓ · implied 5%/yr ✓</span></div>
+        </div>
+        <p class="muted" style="font-size:.86rem;margin:12px 0 0">Months later, <span class="mono">evaluate_thesis</span> answers the only question that matters: <em>which load-bearing condition moved, and when?</em> — “core tripwire tripped on the Oct-30 10-Q: a new Item 1A risk matched ‘in-house modem’ (0.71); gross margin 51%, one of two hysteresis quarters breached.”</p>
+      </div>
+    </div>
+
+    <div class="grid g2" style="align-items:start">
+      <div class="card">
+        <div class="role">The vocabulary</div>
+        <h3>Five kinds of check</h3>
+        <ul>
+          <li><b>financial_metric</b> — any canonical metric, annual or quarterly, with hysteresis in <em>periods</em></li>
+          <li><b>valuation_metric</b> — P/E, P/S, P/B, EV/EBIT, FCF yield off the dated close</li>
+          <li><b>factor_percentile</b> — rank on a screen factor within a cohort</li>
+          <li><b>risk_present</b> — a semantic match in Item 1A themes, optionally only <em>new</em> ones</li>
+          <li><b>implied_expectations</b> — what the price assumes, from the reverse-DCF</li>
+          <li><b>price_metric</b> — the absolute close, realised volatility, distance from the 52-week high, or worst drawdown. Risk framing, so <em>&ldquo;price hasn&rsquo;t broken below $X&rdquo;</em> becomes a monitored tripwire. No moving averages, support levels or breakout signals exist, by design</li>
+        </ul>
+        <p class="muted" style="font-size:.9rem;margin:10px 0 0">A condition with no check is <em>soft</em>: kept and shown, never scored. Judgment still owns the call.</p>
+        <p class="muted" style="font-size:.85rem;margin:10px 0 0"><b>Units, the one thing that bites.</b> Margins and returns are <em>percentages</em> (<span class="mono">roce &gt;= 15</span> is 15%). FCF yield and every price fraction are <em>fractions</em> (<span class="mono">max_drawdown &gt; -0.4</span> is 40% down). The preview resolves every condition live before anything is saved, which is where a wrong threshold shows itself.</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold)">
+        <div class="role">Worked example</div>
+        <h3>Three conditions from a live thesis</h3>
+        <div class="rows" style="gap:10px">
+          <div class="r"><span class="co" style="width:auto">price</span><span class="tx">&ldquo;Has not yet fallen below $100&rdquo; &mdash; on a <em>watch</em>, a reason you are still out. Breaking it means the reason dissolved, and the report names the day.</span></div>
+          <div class="r"><span class="co" style="width:auto">drawdown</span><span class="tx">&ldquo;No fall worse than 40% in a year.&rdquo; Live, this read <b>&minus;39.4%</b> and fired as a near-tripwire &mdash; a business screening cheap, net-cash and stable had put holders through a 39% peak-to-trough fall that nothing in the fundamentals mentioned.</span></div>
+          <div class="r"><span class="co" style="width:auto">roce</span><span class="tx">&ldquo;Above 15% for two years&rdquo; &mdash; an ordinary <span class="mono">financial_metric</span> check, no new type needed, with hysteresis so one soft year is not a verdict.</span></div>
+        </div>
+        <p class="muted" style="font-size:.85rem;margin:12px 0 0">Distance-from-high and drawdown are separate on purpose: a name that fell 60% and fully recovered reads <b>0.0</b> on the first and <b>&minus;0.60</b> on the second. One asks where the price is, the other what it has done to people who held it.</p>
+      </div>
+      <div class="card">
+        <div class="role">The verdict</div>
+        <h3>Honest by construction</h3>
+        <ul>
+          <li><b>core</b> broken ⇒ thesis <b>broken</b>; core weakening or <b>supporting</b> broken ⇒ <b>weakening</b>; else <b>intact</b></li>
+          <li>missing data ⇒ <b>unknown</b> — never a silent pass</li>
+          <li>near-tripwires: supported conditions within 10% of their bar</li>
+          <li>a pinned valuation anchor beside what the price implies <em>now</em> — has the market moved the bar?</li>
+          <li><span class="mono">as_of</span> backtests the whole report to any past date; the history shows what changed and when</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Driving it over MCP</div>
+      <h2>Thirty-eight tools, ten moves</h2>
+      <p class="lead-in">MCP (Model Context Protocol) lets Claude call the app directly. You never touch the tools by name — you ask a question, and the model composes them. But knowing the surface tells you what the app can actually answer.</p>
+    </div>
+    <div class="grid g3">
+      <div class="card">
+        <div class="role">Find</div>
+        <h3>Locate a company</h3>
+        <ul>
+          <li><span class="mono">search_companies</span> — by name/ticker</li>
+          <li><span class="mono">get_company</span> — profile &amp; identifiers</li>
+          <li><span class="mono">list_concepts</span> — what XBRL it reports</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Read numbers</div>
+        <h3>Financials &amp; facts</h3>
+        <ul>
+          <li><span class="mono">get_financials</span> — canonical metrics <span class="muted">(the workhorse)</span></li>
+          <li><span class="mono">get_facts</span> — a raw XBRL concept, point-in-time</li>
+          <li><span class="mono">list_filings</span> · <span class="mono">get_filing_document</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Read narrative</div>
+        <h3>Distilled signal</h3>
+        <ul>
+          <li><span class="mono">get_enrichment</span> — risk / products / forward / events, from the most recent processed filing</li>
+          <li><span class="mono">get_risk_themes</span> — the 10-K’s themes with <span class="mono">is_new</span> diffs plus each 10-Q’s update</li>
+          <li>Every read says which filing it is from and which newer filings are not yet read — the answer is dated, never silently stale</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Search by meaning</div>
+        <h3>Thematic screening</h3>
+        <ul>
+          <li><span class="mono">search_enrichment</span> — over distilled rows</li>
+          <li><span class="mono">search_filings</span> — over raw 10-K and 10-Q passages</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Value it</div>
+        <h3>Prices &amp; multiples</h3>
+        <ul>
+          <li><span class="mono">get_valuation</span> — P/E, P/S, EV/EBIT, FCF yield</li>
+          <li><span class="mono">get_prices</span> — daily bars: close, adjusted close, volume, up to five years</li>
+        </ul>
+        <p class="muted" style="font-size:.85rem;margin:.7em 0 0">WDA computes no moving averages, support/resistance, trend or breakout signals — a deliberate line, drawn in the technical-analysis design note. The corollary is that it hands over the whole series and lets the model do whatever analysis it wants with it.</p>
+      </div>
+      <div class="card">
+        <div class="role">Place it</div>
+        <h3>The macro backdrop</h3>
+        <ul>
+          <li><span class="mono">list_macro_series</span> — what is on record, how fresh, how deep</li>
+          <li><span class="mono">get_macro_series</span> — one series, newest first, point-in-time</li>
+        </ul>
+        <p class="muted" style="font-size:.85rem;margin:.7em 0 0">Eight series, ten years each: the 10- and 2-year Treasury, the fed funds rate, the 10y&ndash;2y spread, CPI, unemployment, WTI crude and Henry Hub gas. Refreshed nightly at 17:30 ET, before the price sync, so the evening&rsquo;s reads see the same day&rsquo;s rates and the same day&rsquo;s closes.</p>
+        <p class="muted" style="font-size:.85rem;margin:.7em 0 0"><b>Why this is not a breach of the primary-sources rule.</b> These are statistical agencies publishing their own measurements &mdash; the same category as a company publishing its own filing. What stays out is anyone&rsquo;s <em>opinion</em> about what the numbers mean.</p>
+      </div>
+      <div class="card">
+        <div class="role">Rank it</div>
+        <h3>The screen</h3>
+        <ul>
+          <li><span class="mono">screen</span> — quality-at-a-reasonable-price, point-in-time</li>
+          <li><span class="mono">get_score</span> — one name's factor breakdown</li>
+          <li><span class="mono">list_factors</span> — the factor set &amp; weights</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Choose the field</div>
+        <h3>Cohorts</h3>
+        <ul>
+          <li><span class="mono">list_cohorts</span> · <span class="mono">get_cohort</span></li>
+          <li><span class="mono">create_cohort</span> · <span class="mono">delete_cohort</span></li>
+          <li><span class="mono">get_rule_fields</span> · <span class="mono">list_sectors</span> — for rule predicates</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Look forward</div>
+        <h3>Implied expectations</h3>
+        <ul>
+          <li><span class="mono">implied_expectations</span> — the growth a price assumes, band-first</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold)">
+        <div class="role">Hold it to account</div>
+        <h3>The thesis</h3>
+        <ul>
+          <li><span class="mono">create_thesis</span> — claims + tripwires, previewed live</li>
+          <li><span class="mono">evaluate_thesis</span> — the health report, dated or current</li>
+          <li><span class="mono">get_thesis</span> · <span class="mono">list_theses</span> · <span class="mono">get_thesis_schema</span></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="role">Extend the corpus</div>
+        <h3>Enrich a name — one approval</h3>
+        <ul>
+          <li><span class="mono">request_enrichment</span> — the preview is the whole plan over the fiscal year (the latest 10-K and every 10-Q since; sync and fetches only if needed; already-processed filings skipped) with its cost and expected time; one confirm runs it all</li>
+          <li><span class="mono">wait_for_pipeline</span> — one call that waits until the company’s jobs are quiet and returns the result, so a confirmed request needs no nudging</li>
+          <li><b>Enriched once, current forever</b> — after that, each new 10-K or 10-Q the daily index discovers for the company is fetched, extracted, indexed, its facts refreshed and its theses re-checked automatically, and each new 8-K has its events read (report plus press release); nobody has to ask</li>
+          <li><span class="mono">get_pipeline_status</span> — every job for the company, with attempts and the error if it failed, and each filing’s fetched / enriched / indexed state</li>
+          <li><span class="mono">request_sync</span> · <span class="mono">request_fetch</span> · <span class="mono">request_index</span> — repairs</li>
+        </ul>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold)">
+        <div class="role">Guardrail</div>
+        <h3>Safe by default</h3>
+        <p style="font-size:.92rem;margin:0" class="muted">Anything that spends money or writes data is a two-step <em>preview → confirm</em> — one confirm per intent, not per step — and enrichment is capped by a daily budget breaker. You see the cost before it runs, and if a step fails you see why: <span class="mono">get_pipeline_status</span> and <span class="mono">get_ingest_status</span> carry the error text.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Two ways to search</div>
+      <h2>Distilled signal vs. raw prose</h2>
+      <p class="lead-in">Both are semantic (meaning-based, not keyword) and both filter by company or section. They answer different questions.</p>
+    </div>
+    <div class="tblwrap">
+      <table class="tbl">
+        <thead><tr><th></th><th>search_enrichment</th><th>search_filings</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">searches</td><td>distilled one-idea rows</td><td>raw 10-K passages (Item 1/1A/7) and 10-Q passages (MD&amp;A, risk updates)</td></tr>
+          <tr><td class="mono">best for</td><td>“which names flag X risk / ship Y product”</td><td>“find any language about Z, even niche”</td></tr>
+          <tr><td class="mono">precision</td><td>higher — pre-distilled by the model</td><td>broader recall — catches the un-distilled</td></tr>
+          <tr><td class="mono">filter</td><td>by target &amp; company</td><td>by section &amp; company</td></tr>
+          <tr><td class="mono">returns</td><td>company · theme/product · score</td><td>company · section · passage · score</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head col">
+      <div class="eyebrow">Coverage today</div>
+      <h2>Two tiers, not one</h2>
+      <p class="lead-in">Retrieval and reasoning were separated once the cost gap between them became clear. <b>3,222 companies</b> are narrative-searchable — 317,550 embedded passages — which is <em>every rankable company that files a 10-K</em>. The corpus widened from the liquid cohort to the whole screenable universe on 2026-09-23, so the invariant is now the simple one: anything you can rank, you can also read. <b>35</b> carry the full extraction stack on top of that: typed risk themes, products, guidance and dated catalysts. The value screen ranks <b>3,712</b> names on fundamentals, all priced to the previous close. Extraction is applied where it earns its keep, not sprayed across the universe — and any company can be promoted into it with a single request.</p>
+    </div>
+    <div class="grid g2">
+      <div class="card">
+        <div class="role">Mega-cap anchors</div>
+        <h3>The market’s center of gravity</h3>
+        <p class="muted" style="font-size:.95rem;margin:0">Apple · Microsoft · NVIDIA · Amazon · Alphabet · Meta · Tesla · Berkshire Hathaway</p>
+      </div>
+      <div class="card" style="border-left:4px solid var(--gold)">
+        <div class="role">AI-semiconductor focus set</div>
+        <h3>Training · inference · memory · networking</h3>
+        <p class="muted" style="font-size:.95rem;margin:0">AMD · Broadcom · Marvell · Qualcomm · Micron · Astera Labs · Credo · Rambus · Synopsys · Cadence · Monolithic Power · Super Micro · Avnet · Lumentum · Intel · Arm</p>
+      </div>
+    </div>
+    <p class="muted" style="font-size:.9rem;margin-top:18px;max-width:62ch">These are the deeply-extracted names. The searchable corpus is far wider: ask about foundry concentration or tariff exposure and the answer comes back from companies nobody put on a watchlist — Ambarella, Everspin, Lattice, Pro-Dex — because they wrote it in their own risk factors. A nightly job keeps widening the corpus and catching up any company whose newest filings have not been processed yet &mdash; and now remembers which companies have no 10-K to index at all (foreign issuers filing 20-F or 40-F, trusts, funds) so it stops re-asking EDGAR about them every night.</p>
+  </div>
+</section>
+
+<section style="border-bottom:none">
+  <div class="wrap col">
+    <div class="eyebrow">In one breath</div>
+    <h2>Why it’s useful to a value investor</h2>
+    <ol class="flow" style="margin-top:24px">
+      <li><div><b>Comparable fundamentals, instantly.</b> Ask for any metric across any set of names and get quarter-aligned, restatement-resolved series — the tedious part of primary research, gone.</div></li>
+      <li><div><b>The narrative as data.</b> Risk factors, products, guidance and catalysts become queryable rows — and the year-over-year <em>change</em> in disclosed risk is surfaced explicitly.</div></li>
+      <li><div><b>Thematic screening by meaning.</b> “Who is exposed to foundry concentration?” or “who is guiding higher capex?” — answered across the corpus, not one filing at a time.</div></li>
+      <li><div><b>Value <em>and</em> rank, in one place.</b> Real multiples — P/E, FCF yield, EV/EBIT — and a quality-at-a-reasonable-price composite that ranks the fact-having universe, best first.</div></li>
+      <li><div><b>Rank on your own terms.</b> Screen the whole market, a saved watchlist, or everything matching a live rule — the cohort you choose sets what every percentile is relative to.</div></li>
+      <li><div><b>What the price assumes.</b> A reverse-DCF restates any multiple as the growth path it requires — a range, with three bases and explicit assumptions — so a thesis argues with the market’s number, not a hunch.</div></li>
+      <li><div><b>A thesis that answers back.</b> Claims and tripwires bound to the data, re-checked every night — so the question “is my case still true?” has an answer with a date on it.</div></li>
+      <li><div><b>Honest history.</b> Point-in-time facts <em>and</em> prices mean a thesis or a screen tested on the past is tested on what was actually knowable — no lookahead.</div></li>
+      <li><div><b>You just ask.</b> Natural language in, structured research out — the model drives forty tools so you don’t have to.</div></li>
+    </ol>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap col">
+    WorldDomination · equity-research backend · SEC EDGAR + XBRL, normalized, valued, LLM-enriched and scored, served to Claude over MCP. Figures reflect the live dataset at time of writing (fact coverage is actively widening); example results are drawn from the current corpus.
+  </div>
+</footer>
