@@ -39,6 +39,7 @@ markdown_extensions:
 # copied here at all, rather than copied and hidden: a public repo makes every file
 # public regardless of what the site's navigation shows.
 nav:
+  - Home: index.md
   - Overview: architecture.md
   - Field guide: field-guide.html
   - How it decides:
