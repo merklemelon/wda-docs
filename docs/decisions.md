@@ -230,3 +230,46 @@ Grok's endpoint fields), the SDK app is mounted at `/` with the transport at `/m
 and `/health` registered first. Signing keys < 32 bytes are rejected at startup
 (HS256/RFC 7518 §3.2). Trade-off: JWTs can't be revoked before expiry; TTLs are
 short (code 60s, access 1h, refresh 30d).
+
+## 2026-09-25 — Macro sources: FRED as Treasury's distribution, and what a vintage means
+
+**Decision.** Rates, the yield curve, mortgage rates, credit spreads, CPI and
+unemployment come from FRED; crude and natural gas from EIA. No direct Treasury adapter.
+
+**Why not Treasury.** Treasury *originates* the par yield curve, but FRED *distributes*
+it, carrying every tenor from one month to thirty years, daily, current to the prior
+session. A second adapter would be a second failure mode for identical numbers and would
+have to re-solve point-in-time handling that already works. Verified against the live API
+before deciding, not assumed.
+
+**Why this does not breach the primary-sources rule** that keeps news and analyst
+estimates out: these are statistical agencies publishing their own measurements — the
+same category as a company publishing its own filing. What stays excluded is anybody's
+*opinion* about what the numbers mean. One series carries a caveat: `BAMLH0A0HYM2` comes
+from ICE BofA, an index provider rather than an agency. It measures observable bond
+prices, so it sits inside the rule, but it is the only series here that is not a
+government statistic.
+
+**Which series, and why not more.** Four tenors (3mo/2y/10y/30y) describe the curve's
+shape; 1mo, 6mo, 1y, 7y and 20y add granularity no fundamental thesis reaches for. The
+30-year mortgage earns its place on constituency — the universe holds 125 REITs, 17
+homebuilders and 6 mortgage lenders whose revenue is a direct function of it. The same
+guardrail `technical-analysis.md` §5 applies to indicators applies here: a curated
+handful beats a zoo, and every series has to be asked for by a question somebody poses.
+
+**Two limits that are permanent until someone does more work, and are stated in the
+server instructions rather than left to be discovered:**
+
+- **Vintages are null.** Neither agency gives a per-observation release date on the
+  routes in use. FRED's default endpoint stamps every row with the date of the *request*
+  — a decade of daily yields all carrying that morning's date — which is why reading it
+  as a publication date silently emptied every historical `as_of` query until it was
+  caught. EIA publishes none at all. Real vintages need ALFRED-style requests returning
+  every revision of every point. So `as_of` excludes readings dated after it but cannot
+  exclude a figure revised since.
+- **`BAMLH0A0HYM2` starts in 2023**, not ten years back: FRED licenses it on a rolling
+  window. A fine "what is risk appetite now" gauge and a poor "what did this look like in
+  a downturn" one, because the sample contains no recession.
+
+**Not built.** A macro *check* type. A series is something you look up, not something
+that watches itself — "the 10-year stays below 5%" cannot yet be a thesis condition.

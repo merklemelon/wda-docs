@@ -212,7 +212,16 @@ describes. Macro figures are revised for years, so a point-in-time read excludes
 readings dated after `as_of` and readings not yet published by then — the same discipline
 `filed_at` enforces on facts. It is nullable on purpose: an agency that publishes no
 release date records None rather than the fetch date dressed up as one, and `as_of` then
-honestly degrades to filtering on the observation date. See `docs/decisions.md`.
+honestly degrades to filtering on the observation date.
+
+**In practice it is null everywhere today.** Neither agency gives a per-observation
+release date on the routes in use: FRED's default endpoint stamps every row with the date
+of the *request* (a decade of daily yields all carrying that morning's date, which is why
+reading it as a vintage silently emptied every historical query until 2026-09-24), and
+EIA publishes no release date at all. Real vintages need ALFRED-style requests returning
+every revision of every point — a larger fetch and a separate job. So `as_of` on macro
+excludes readings dated after it but cannot exclude a figure revised since, and every
+caller is told so in the response.
 
 Lineage of every derived number is documented in
 [fundamentals-and-valuation.md](fundamentals-and-valuation.md). L5 persistence (why the
@@ -235,6 +244,7 @@ server instructions that carry driving guidance per feature (pinned by a test):
 | Value | `get_valuation`, `get_prices` |
 | Rank | `screen`, `get_score`, `list_factors` |
 | Cohorts | `list_cohorts`, `get_cohort`, `create_cohort`*, `delete_cohort`*, `get_rule_fields`, `list_sectors` |
+| Macro | `list_macro_series`, `get_macro_series` |
 | Forward | `implied_expectations` |
 | Thesis | `get_thesis_schema`, `create_thesis`*, `get_thesis`, `evaluate_thesis`, `list_theses`, `delete_thesis`* |
 | Extend / ops | `request_enrichment`* (one approval: sync → fetch → extract → embed → index), `get_pipeline_status`, `get_ingest_status` (with `recent_failures`), and the granular `request_sync`*, `request_fetch`*, `request_embed`*, `request_index`*, `request_price_sync`* |
